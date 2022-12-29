@@ -1,16 +1,10 @@
-// home page - indes.js
 import React, { useEffect, useState } from "react";
 import { Button } from '@mui/material';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-
+import Grid from '@mui/material/Grid';
+import SimpleAccordion from "./components/accordion";
 
 const HomePage = () => {
     const [members, setMembers] = useState([]);
@@ -23,7 +17,6 @@ const HomePage = () => {
             const jsonResult = await result.json()
             const newMemberList = await jsonResult['all_members']
             console.log('名單:', newMemberList)
-            
             setMembers(jsonResult['all_members'])
         }
 
@@ -36,7 +29,7 @@ const HomePage = () => {
         })
         const jsonResult = await result.json()
         const newMemberList = await jsonResult['all_members']
-        if(addName in newMemberList){
+        if (addName in newMemberList) {
             console.log(addName)
             setMembers(oldMemberList => [...oldMemberList, addName])
         } else {
@@ -47,32 +40,31 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1>Home Page</h1>
-            <Box
-                component="form"
-                sx={{
-                    '& > :not(style)': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off"
+            <Grid item xs="auto">
+                <h1>新增成員</h1>
+            </Grid>
+            <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={3}
             >
-                <TextField id="outlined-basic" label="輸入名稱" variant="outlined" onChange={(e) => { setAddName(e.target.value) }} />
-                <Button variant="contained" endIcon={<PersonAddIcon />} onClick={submitAddMember}>
-                    加入新成員
-                </Button>
-            </Box>
+                <Grid item xs="auto">
+                    <TextField id="outlined-basic" label="輸入名稱" variant="outlined" size="small" onChange={(e) => { setAddName(e.target.value) }} />
+                </Grid>
+                <Grid item xs="auto">
+                    <Button variant="contained" endIcon={<PersonAddIcon />} onClick={submitAddMember}>
+                        加入新成員
+                    </Button>
+                </Grid>
+            </Grid>
             <List>
-                {members.map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {/* index % 2 === 0 ? <AssignmentIndIcon /> : <AssignmentIndIcon /> */}
-                                <AssignmentIndIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <Grid>
+                    <h3>目前名單</h3>
+                </Grid>
+
+                <SimpleAccordion />
             </List>
         </div>
     );
