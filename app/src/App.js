@@ -1,8 +1,9 @@
+import MuiAppBar from './components/MuiAppBar';
 
 
 function App() {
   return (
-    <h1>Hello world</h1>
+      <MuiAppBar />
   );
 }
 
